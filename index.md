@@ -20,7 +20,7 @@ All the examples are tested using Node.js release **v14.16.0**. These examples c
 
 # Instantiation
 
-To run a WebAssembly module, we must load the bytecode of the module stored in a *.wasm* file. From *Node.js* you can load it with the *fs* module:
+To run a WebAssembly module, we must load the bytecode of the module stored in a *.wasm* file. From Node.js you can load it with the *fs* module:
 ```javascript
 const fs = require("fs");
 let bytecode = fs.readFileSync('add/add.wasm');
@@ -66,7 +66,7 @@ let wasm = new WebAssembly.Instance(module);
 # Parameter Types
 The WebAssembly module accepts the following types for the parameters, only JavaScript numbers can be set as parameter values:
 <table>
-<tr><th>WebAssembly Type</th><th>Naming conventions</th><th><em>typeof()</em></th></tr>
+<tr><th>WebAssembly Type</th><th>Naming conventions</th><th>typeof()</th></tr>
 <tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr>
 <tr><td>unsigned/signed integer on 64 bits</td><td>n/a</td><td>n/a</td></tr>
 <tr><td>float on 32 bits</td><td>float32</td><td>"number"</td></tr>

@@ -60,10 +60,6 @@ td {
   padding: 8px;
 }
 
-a {
-    word-break: break-all;
-}
-
 /*!
  * StackOverflow.com light style
  *
@@ -209,7 +205,7 @@ a {
 </ul>
 <h1 id="Instantiation">Instantiation</h1>
 
-<p>To run a WebAssembly module, we must load the bytecode of the module stored in a <em>.wasm</em> file. From <em>Node.js</em> you can load it with the <em>fs</em> module:</p>
+<p>To run a WebAssembly module, we must load the bytecode of the module stored in a <em>.wasm</em> file. From Node.js you can load it with the <em>fs</em> module:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);
 <span class="hljs-keyword">let</span> bytecode = fs.readFileSync(<span class="hljs-string">&#x27;add/add.wasm&#x27;</span>);
@@ -255,7 +251,7 @@ let wasm = new WebAssembly.Instance(module);
 
 <p><table></p>
 
-<p><tr><th>WebAssembly Type</th><th>Naming conventions</th><th><em>typeof()</em></th></tr></p>
+<p><tr><th>WebAssembly Type</th><th>Naming conventions</th><th>typeof()</th></tr></p>
 
 <p><tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr></p>
 
@@ -771,22 +767,22 @@ Ship #3 locate at (0, -2)
 <h1 id="To-Go-Further">To Go Further</h1>
 
 <ul>
-<li>The JavaScript WebAssembly reference documentation by the Mozilla Developer Network:<br> <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly">https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly</a></li>
+<li>The JavaScript WebAssembly reference documentation by the Mozilla Developer Network:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly">https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly</a></li>
 </ul>
 <ul>
-<li>Utility to compile a WebAssembly module from WAT format to binary format:<br> <a target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wat2wasm/">https://webassembly.github.io/wabt/demo/wat2wasm/</a></li>
+<li>Utility to compile a WebAssembly module from WAT format to binary format:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wat2wasm/">https://webassembly.github.io/wabt/demo/wat2wasm/</a></li>
 </ul>
 <ul>
-<li>Utility to decode a WebAssembly module from binary format to WAT format:<br> <a target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wasm2wat/">https://webassembly.github.io/wabt/demo/wasm2wat/</a></li>
+<li>Utility to decode a WebAssembly module from binary format to WAT format:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wasm2wat/">https://webassembly.github.io/wabt/demo/wasm2wat/</a></li>
 </ul>
 <ul>
-<li>Forhcoming WebAssembly specification:<br><a target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/core/">https://webassembly.github.io/spec/core/</a></li>
+<li>Forhcoming WebAssembly specification:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/core/">https://webassembly.github.io/spec/core/</a></li>
 </ul>
 <ul>
-<li>Forhcoming WebAssembly JavaScript interface specification:<br><a target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/js-api/">https://webassembly.github.io/spec/js-api/</a></li>
+<li>Forhcoming WebAssembly JavaScript interface specification:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/js-api/">https://webassembly.github.io/spec/js-api/</a></li>
 </ul>
 <ul>
-<li>The empscripten project:<br><a target="_blank" rel="noopener noreferrer" href="https://emscripten.org/">https://emscripten.org/</a></li>
+<li>The empscripten project:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://emscripten.org/">https://emscripten.org/</a></li>
 </ul>
 </body>
 </html>
