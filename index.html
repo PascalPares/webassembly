@@ -9,7 +9,7 @@
 
 <meta property="og:title" content="Web Assesmbly for JavaScript Developers"/>
 <meta property="og:type" content="article"/>
-<meta property="og:url" content="https://pascalpares.appspot.ovh/webassembly"/>
+<meta property="og:url" content="https://pascalpares.appspot.ovh/webassembly-for-javascript-developers"/>
 <meta property="og:description" content="This paper is an introduction of the JavaScript WebAssembly interface."/>
 
 <meta name="twitter:title" content="WebAssembly for JavaScript Developers"/>
@@ -182,7 +182,7 @@ td {
 <p><strong>Revision history</strong>:</p>
 
 <ul>
-<li>April 20, 2021: First publication as a draft</li>
+<li>April 21, 2021: First publication</li>
 </ul>
 <h1 id="Introduction">Introduction</h1>
 
@@ -220,7 +220,7 @@ td {
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> wasm = <span class="hljs-keyword">await</span> WebAssembly.instantiateStreaming(bytecode);
 </code></pre>
-<p><strong>Warning</strong>: For the Web Browsers (<em>Edge</em>, <em>Chrome</em>, <em>Firefox</em>), we are using the <em>instantiateStreaming</em> function, whereas for <em>Node.js</em>, we are using the <em>instantiate</em> function, because the former one is not yet supported by <em>Node.js</em> v14.16.0.</p>
+<p><strong>Warning</strong>: For the Web Browsers (Edge, Chrome, Firefox), we are using the <em>instantiateStreaming</em> function, whereas for Node.js, we are using the <em>instantiate</em> function, because the former one is not yet supported by Node.js v14.16.0.</p>
 
 <p>After the instantiation, we can call any exported function:</p>
 

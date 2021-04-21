@@ -1,6 +1,5 @@
 **Revision history**:
-- April 20, 2021: First publication as a draft
-
+- April 21, 2021: First publication
 
 # Introduction
 
@@ -38,7 +37,7 @@ The instantiation step compiles the code, and initializes the internal memory of
 ```javascript
 let wasm = await WebAssembly.instantiateStreaming(bytecode);
 ```
-**Warning**: For the Web Browsers (*Edge*, *Chrome*, *Firefox*), we are using the *instantiateStreaming* function, whereas for *Node.js*, we are using the *instantiate* function, because the former one is not yet supported by *Node.js* v14.16.0.
+**Warning**: For the Web Browsers (Edge, Chrome, Firefox), we are using the *instantiateStreaming* function, whereas for Node.js, we are using the *instantiate* function, because the former one is not yet supported by Node.js v14.16.0.
 
 After the instantiation, we can call any exported function:
 ```javascript
