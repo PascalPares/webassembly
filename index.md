@@ -21,7 +21,7 @@ All the examples are tested using Node.js release **v14.16.0**. These examples c
 
 # Instantiation
 
-To run a WebAssembly module, we must load the bytecode of the module. This bytecode is stored in a *.wasm* file. From Node.js you can load it with the *fs* module:
+To run a WebAssembly module, we must load the bytecode of the module stored in a *.wasm* file. From *Node.js* you can load it with the *fs* module:
 ```javascript
 const fs = require("fs");
 let bytecode = fs.readFileSync('add/add.wasm');
@@ -31,14 +31,14 @@ Alternatively, you can request the file over HTTP:
 let bytecode = await fetch("add/add.wasm");
 ```
 
-The bytecode is an intermediate representation of a program. It could be executed by a virtual machine, but the purpose of WebAssembly is to compile this bytecode into a binary code for the host machine such as a C programming language program.
+The bytecode is an intermediate representation of a program. It could be executed by a virtual machine, but the purpose of WebAssembly is to compile this bytecode into a binary code for the host machine such as a C language program.
 
 The instantiation step compiles the code, and initializes the internal memory of the WebAssembly module:
 
 ```javascript
 let wasm = await WebAssembly.instantiateStreaming(bytecode);
 ```
-**Warning**: For the Web Browsers (*Edge*, *Chrome*, *Firefox*), we are using the *instantiateStreaming* function, whereas for Node.js, we are using the *instantiate* function, because the former one is not yet supported by *Node.js* v14.16.0.
+**Warning**: For the Web Browsers (*Edge*, *Chrome*, *Firefox*), we are using the *instantiateStreaming* function, whereas for *Node.js*, we are using the *instantiate* function, because the former one is not yet supported by *Node.js* v14.16.0.
 
 After the instantiation, we can call any exported function:
 ```javascript
@@ -177,7 +177,7 @@ You must be aware that the WebAssembly module may have defined an internal *star
 
 # Global Variables
 
-Some global variables can be shared between the JavaScript code and the WebAssembly module. They can be defined either on JavaScript side or on Web Asssembly side. Like parameters, a global variable can only be typed as a JavaScript number.
+Some global variables can be shared between the JavaScript code and the WebAssembly module. They can be defined either on JavaScript side or on WebAssembly side. Like parameters, a global variable can only be typed as a JavaScript number.
 
 Let's create a mutable global variable as an integer encoded on 32 bits, with the initial value of 0:
 ```javascript
@@ -210,7 +210,7 @@ The memory buffer (or linear memory in WebAssembly terminology) is a buffer of b
 
 ## Allocation 
 
-A memory buffer can be allocated on JavaScript side, or the WebAssembly module side. On JavaScript side, the memory is allocated by specifying an initial size that is a number of pages, each page size is 64 x 1024 bytes (64 kilo bytes). A maximum size can be specified optionally as well:
+A memory buffer can be allocated on JavaScript side, or the WebAssembly module side. On JavaScript side, the memory is allocated by specifying an initial size that is a number of pages, each page size is 64 kilo-bytes. A maximum size can be specified optionally as well:
 ```javascript
 let memory = new WebAssembly.Memory( { initial: 1, maximum: 2 } );
 ```
@@ -225,14 +225,14 @@ for (let i = 0; i < 10; i++) {
   numbers[i] = i;
 }
 ```
-As example of the use of the memory buffer we have just allocated, we are using the *sum* WebAssembly module which interface is in C programming language:
+As a use case of the memory buffer we have just allocated, we call the *sum* WebAssembly module which interface is in C programming language:
 ```c
 extern int mem[]; // imported memory buffer
 int sum (int len); // sum the "len" integers stored in mem and return the result
 ```
 We transmit this buffer to the WebAssembly Module at instantiation time.
 Here we suppose that the expected memory name is *mem* and is imported via the *env* key.
-Then we call the sum functions with the number of numbers to sum:
+Then we call the *sum* functions with the size of the array to sum:
 ```javascript
 let run = async () => {
     try {

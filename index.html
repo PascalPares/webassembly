@@ -205,7 +205,7 @@ td {
 </ul>
 <h1 id="Instantiation">Instantiation</h1>
 
-<p>To run a WebAssembly module, we must load the bytecode of the module. This bytecode is stored in a <em>.wasm</em> file. From Node.js you can load it with the <em>fs</em> module:</p>
+<p>To run a WebAssembly module, we must load the bytecode of the module stored in a <em>.wasm</em> file. From <em>Node.js</em> you can load it with the <em>fs</em> module:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);
 <span class="hljs-keyword">let</span> bytecode = fs.readFileSync(<span class="hljs-string">&#x27;add/add.wasm&#x27;</span>);
@@ -214,13 +214,13 @@ td {
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> bytecode = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">&quot;add/add.wasm&quot;</span>);
 </code></pre>
-<p>The bytecode is an intermediate representation of a program. It could be executed by a virtual machine, but the purpose of WebAssembly is to compile this bytecode into a binary code for the host machine such as a C programming language program.</p>
+<p>The bytecode is an intermediate representation of a program. It could be executed by a virtual machine, but the purpose of WebAssembly is to compile this bytecode into a binary code for the host machine such as a C language program.</p>
 
 <p>The instantiation step compiles the code, and initializes the internal memory of the WebAssembly module:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> wasm = <span class="hljs-keyword">await</span> WebAssembly.instantiateStreaming(bytecode);
 </code></pre>
-<p><strong>Warning</strong>: For the Web Browsers (<em>Edge</em>, <em>Chrome</em>, <em>Firefox</em>), we are using the <em>instantiateStreaming</em> function, whereas for Node.js, we are using the <em>instantiate</em> function, because the former one is not yet supported by <em>Node.js</em> v14.16.0.</p>
+<p><strong>Warning</strong>: For the Web Browsers (<em>Edge</em>, <em>Chrome</em>, <em>Firefox</em>), we are using the <em>instantiateStreaming</em> function, whereas for <em>Node.js</em>, we are using the <em>instantiate</em> function, because the former one is not yet supported by <em>Node.js</em> v14.16.0.</p>
 
 <p>After the instantiation, we can call any exported function:</p>
 
@@ -364,7 +364,7 @@ wasmApp.instance.exports.run();
 
 <h1 id="Global-Variables">Global Variables</h1>
 
-<p>Some global variables can be shared between the JavaScript code and the WebAssembly module. They can be defined either on JavaScript side or on Web Asssembly side. Like parameters, a global variable can only be typed as a JavaScript number.</p>
+<p>Some global variables can be shared between the JavaScript code and the WebAssembly module. They can be defined either on JavaScript side or on WebAssembly side. Like parameters, a global variable can only be typed as a JavaScript number.</p>
 
 <p>Let's create a mutable global variable as an integer encoded on 32 bits, with the initial value of 0:</p>
 
@@ -397,7 +397,7 @@ Counter value is <span class="hljs-number">2</span>
 
 <h2 id="Allocation-">Allocation </h2>
 
-<p>A memory buffer can be allocated on JavaScript side, or the WebAssembly module side. On JavaScript side, the memory is allocated by specifying an initial size that is a number of pages, each page size is 64 x 1024 bytes (64 kilo bytes). A maximum size can be specified optionally as well:</p>
+<p>A memory buffer can be allocated on JavaScript side, or the WebAssembly module side. On JavaScript side, the memory is allocated by specifying an initial size that is a number of pages, each page size is 64 kilo-bytes. A maximum size can be specified optionally as well:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> memory = <span class="hljs-keyword">new</span> WebAssembly.Memory( { <span class="hljs-attr">initial</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">maximum</span>: <span class="hljs-number">2</span> } );
 </code></pre>
@@ -412,7 +412,7 @@ Counter value is <span class="hljs-number">2</span>
   numbers[i] = i;
 }
 </code></pre>
-<p>As example of the use of the memory buffer we have just allocated, we are using the <em>sum</em> WebAssembly module which interface is in C programming language:</p>
+<p>As a use case of the memory buffer we have just allocated, we call the <em>sum</em> WebAssembly module which interface is in C programming language:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> mem[]; <span class="hljs-comment">// imported memory buffer</span>
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sum</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> len)</span></span>; <span class="hljs-comment">// sum the &quot;len&quot; integers stored in mem and return the result</span>
@@ -421,7 +421,7 @@ Counter value is <span class="hljs-number">2</span>
 
 <p>Here we suppose that the expected memory name is <em>mem</em> and is imported via the <em>env</em> key.</p>
 
-<p>Then we call the sum functions with the number of numbers to sum:</p>
+<p>Then we call the <em>sum</em> functions with the size of the array to sum:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
     <span class="hljs-keyword">try</span> {
