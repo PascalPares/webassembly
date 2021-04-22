@@ -1,5 +1,6 @@
 **Revision history**:
 - April 21, 2021: First publication
+- April 22, 2021: Minor changes
 
 # Introduction
 
@@ -66,7 +67,7 @@ let wasm = new WebAssembly.Instance(module);
 # Parameter Types
 The WebAssembly module accepts the following types for the parameters, only JavaScript numbers can be set as parameter values:
 <table>
-<tr><th>WebAssembly Type</th><th>Naming conventions</th><th>typeof()</th></tr>
+<tr><th>WebAssembly Type</th><th>Naming convention</th><th>typeof()</th></tr>
 <tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr>
 <tr><td>unsigned/signed integer on 64 bits</td><td>n/a</td><td>n/a</td></tr>
 <tr><td>float on 32 bits</td><td>float32</td><td>"number"</td></tr>
@@ -251,7 +252,7 @@ let run = async () => {
 [Source code](https://github.com/PascalPares/webassembly/tree/master/sum)
 
 ## Strings
-As the parameters of functions are only numbers, a string value cannot be used as a parameter of a WebAssembly function. To transmit a string, we must move the characters into the memory buffer. We use the *TextEncoder* function to do that in an efficient and a flexible way. However we cannot avoid a memory copy:
+As the parameters of WebAssembly functions are only numbers, a string value cannot be used as a parameter. To transmit a string, we must move the characters into the memory buffer. We use the *TextEncoder* function to do that in an efficient and a flexible way. However we cannot avoid a memory copy:
 ```javascript
 const hello = "hello world!";
 let memory = new WebAssembly.Memory( { initial:1 } );
@@ -453,7 +454,7 @@ If more memory is required, then we can grow up the memory buffer with the *grow
 const PAGE_SIZE = 64 * 1024;
 let currentSize = memory.buffer.byteLength;
 if (currentSize < newSize) {
-    let nbPages = Math.ceil(byteBuffer.length / PAGE_SIZE);
+    let nbPages = Math.ceil(newSize / PAGE_SIZE);
     console.log("grow memory up to ", nbPages, " * ", PAGE_SIZE);
     memory.grow(nbPages);
 }

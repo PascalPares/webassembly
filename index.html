@@ -183,6 +183,7 @@ td {
 
 <ul>
 <li>April 21, 2021: First publication</li>
+<li>April 22, 2021: Minor changes</li>
 </ul>
 <h1 id="Introduction">Introduction</h1>
 
@@ -251,7 +252,7 @@ let wasm = new WebAssembly.Instance(module);
 
 <p><table></p>
 
-<p><tr><th>WebAssembly Type</th><th>Naming conventions</th><th>typeof()</th></tr></p>
+<p><tr><th>WebAssembly Type</th><th>Naming convention</th><th>typeof()</th></tr></p>
 
 <p><tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr></p>
 
@@ -442,7 +443,7 @@ Counter value is <span class="hljs-number">2</span>
 
 <h2 id="Strings">Strings</h2>
 
-<p>As the parameters of functions are only numbers, a string value cannot be used as a parameter of a WebAssembly function. To transmit a string, we must move the characters into the memory buffer. We use the <em>TextEncoder</em> function to do that in an efficient and a flexible way. However we cannot avoid a memory copy:</p>
+<p>As the parameters of WebAssembly functions are only numbers, a string value cannot be used as a parameter. To transmit a string, we must move the characters into the memory buffer. We use the <em>TextEncoder</em> function to do that in an efficient and a flexible way. However we cannot avoid a memory copy:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">const</span> hello = <span class="hljs-string">&quot;hello world!&quot;</span>;
 <span class="hljs-keyword">let</span> memory = <span class="hljs-keyword">new</span> WebAssembly.Memory( { <span class="hljs-attr">initial</span>:<span class="hljs-number">1</span> } );
@@ -645,7 +646,7 @@ wasm.instance.exports.sum(c.byteOffset, c.length);
 <pre><code class="hljs"><span class="hljs-keyword">const</span> PAGE_SIZE = <span class="hljs-number">64</span> * <span class="hljs-number">1024</span>;
 <span class="hljs-keyword">let</span> currentSize = memory.buffer.byteLength;
 <span class="hljs-keyword">if</span> (currentSize &lt; newSize) {
-    <span class="hljs-keyword">let</span> nbPages = <span class="hljs-built_in">Math</span>.ceil(byteBuffer.length / PAGE_SIZE);
+    <span class="hljs-keyword">let</span> nbPages = <span class="hljs-built_in">Math</span>.ceil(newSize / PAGE_SIZE);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;grow memory up to &quot;</span>, nbPages, <span class="hljs-string">&quot; * &quot;</span>, PAGE_SIZE);
     memory.grow(nbPages);
 }
