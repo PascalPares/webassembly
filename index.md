@@ -490,11 +490,11 @@ The main purpose of indirect calls is to replace the following switch statement:
 ```javascript
 let choice = ...;
 switch (choice) {
-	case 0: 
-    	doActionA(p1, p2); 
+    case 0: 
+        doActionA(p1, p2); 
         break;
     case 1:
-    	doActionB(p1, p2);
+        doActionB(p1, p2);
         break;
     case 2:
         ...
