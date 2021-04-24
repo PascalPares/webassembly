@@ -60,6 +60,10 @@ td {
   padding: 8px;
 }
 
+/*
+ * The code snippets are highlighted with https://highlightjs.org/
+ */
+ 
 /*!
  * StackOverflow.com light style
  *
@@ -157,34 +161,26 @@ td {
 <li><a href="#Dynamic-Linking">Dynamic Linking</a></li>
 <li><a href="#Auto-Start">Auto Start</a></li>
 <li><a href="#Global-Variables">Global Variables</a></li>
-<li><a href="#Memory-Buffer">Memory Buffer</a></li>
-<ul>
-<li><a href="#Allocation-">Allocation </a></li>
-</ul>
-<ul>
+<li><a href="#Memory-Buffer">Memory Buffer</a><ul>
+<li><a href="#Allocation">Allocation</a></li>
 <li><a href="#Strings">Strings</a></li>
-</ul>
-<ul>
 <li><a href="#Shared-Memory-Buffer">Shared Memory Buffer</a></li>
-</ul>
-<ul>
 <li><a href="#Static-Memory-Buffer">Static Memory Buffer</a></li>
-</ul>
-<ul>
 <li><a href="#Dynamic-Memory-Buffer">Dynamic Memory Buffer</a></li>
-</ul>
-<ul>
 <li><a href="#Out-of-Bounds-Exception">Out of Bounds Exception</a></li>
 </ul>
+</li>
 <li><a href="#Table">Table</a></li>
 <li><a href="#To-Go-Further">To Go Further</a></li>
 </ul>
+
 <p><strong>Revision history</strong>:</p>
 
 <ul>
 <li>April 21, 2021: First publication</li>
 <li>April 22, 2021: Minor changes</li>
 </ul>
+
 <h1 id="Introduction">Introduction</h1>
 
 <p>WebAssembly is a standard of the World Wide Web consortium, which latest official release is <a target="_blank" rel="noopener noreferrer" href="https://www.w3.org/TR/wasm-core-1/">WebAssembly Core Specification, W3C Recommendation, 5 December 2019</a>. It is now supported by a majority of the <a target="_blank" rel="noopener noreferrer" href="https://webassembly.org/roadmap/">main browsers</a>. The primary purpose of this standard is to enable interoperability of JavaScript code executed by the Web browser with a compiled binary code. The WebAssembly modules are mainly dedicated to the implemention of algorithms requiring a fast execution compared to the capabilities of the JavaScript virtual machine. These algorithms are the basis of interactive 3D visualization, audio and video softwares, as well as games.</p>
@@ -204,6 +200,7 @@ td {
 <li>the bytecode of the WebAssembly module,</li>
 <li>the source code of the WebAssembly module in <em>WAT</em> syntax, which is the textual representation of the bytecode.</li>
 </ul>
+
 <h1 id="Instantiation">Instantiation</h1>
 
 <p>To run a WebAssembly module, we must load the bytecode of the module stored in a <em>.wasm</em> file. From Node.js you can load it with the <em>fs</em> module:</p>
@@ -211,16 +208,19 @@ td {
 <pre><code class="hljs"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);
 <span class="hljs-keyword">let</span> bytecode = fs.readFileSync(<span class="hljs-string">&#x27;add/add.wasm&#x27;</span>);
 </code></pre>
+
 <p>Alternatively, you can request the file over HTTP:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> bytecode = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">&quot;add/add.wasm&quot;</span>);
 </code></pre>
+
 <p>The bytecode is an intermediate representation of a program. It could be executed by a virtual machine, but the purpose of WebAssembly is to compile this bytecode into a binary code for the host machine such as a C language program.</p>
 
 <p>The instantiation step compiles the code, and initializes the internal memory of the WebAssembly module:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> wasm = <span class="hljs-keyword">await</span> WebAssembly.instantiateStreaming(bytecode);
 </code></pre>
+
 <p><strong>Warning</strong>: For the Web Browsers (Edge, Chrome, Firefox), we are using the <em>instantiateStreaming</em> function, whereas for Node.js, we are using the <em>instantiate</em> function, because the former one is not yet supported by Node.js v14.16.0.</p>
 
 <p>After the instantiation, we can call any exported function:</p>
@@ -239,6 +239,7 @@ td {
 &gt; run().then();
 &gt; <span class="hljs-number">3</span>
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/add">Source code</a></p>
 
 <p>If you need to compile the bytecode without instantiation, in order to transfer the module to a JavaScript <strong>worker</strong> then you will use the <em>WebAssembly.compile</em> function and you will instantiate the WebAssembly module from the worker with the <em>WebAssembly.Instance</em> constructor:</p>
@@ -246,23 +247,17 @@ td {
 <pre><code class="hljs">let module = WebAssembly.compile(bytecode);
 let wasm = new WebAssembly.Instance(module);
 </code></pre>
+
 <h1 id="Parameter-Types">Parameter Types</h1>
 
 <p>The WebAssembly module accepts the following types for the parameters, only JavaScript numbers can be set as parameter values:</p>
-
-<p><table></p>
-
-<p><tr><th>WebAssembly Type</th><th>Naming convention</th><th>typeof()</th></tr></p>
-
-<p><tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr></p>
-
-<p><tr><td>unsigned/signed integer on 64 bits</td><td>n/a</td><td>n/a</td></tr></p>
-
-<p><tr><td>float on 32 bits</td><td>float32</td><td>"number"</td></tr></p>
-
-<p><tr><td>float on 64 bits</td><td>float64</td><td>"number"</td></tr></p>
-
-<p></table></p>
+<table>
+<tr><th>WebAssembly Type</th><th>Naming convention</th><th>typeof()</th></tr>
+<tr><td>unsigned/signed integer on 32 bits</td><td>int32</td><td>"number"</td></tr>
+<tr><td>unsigned/signed integer on 64 bits</td><td>n/a</td><td>n/a</td></tr>
+<tr><td>float on 32 bits</td><td>float32</td><td>"number"</td></tr>
+<tr><td>float on 64 bits</td><td>float64</td><td>"number"</td></tr>
+</table>
 
 <p>If you transmit a number whereas an integer encoded on 64 bits is expected you will get an exception:</p>
 
@@ -280,6 +275,7 @@ let wasm = new WebAssembly.Instance(module);
 &gt; run().then();
 <span class="hljs-built_in">TypeError</span>: wasm <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">signature</span> <span class="hljs-title">contains</span> <span class="hljs-title">illegal</span> <span class="hljs-title">type</span></span>
 </code></pre>
+
 <h1 id="Callbacks">Callbacks</h1>
 
 <p>The WebAssembly module can call a JavaScript function. From the point of view of the module this is an imported (or <em>extern</em>) function. For example, the WebAssembly <em>echo</em> module implementation would be in C programming language:</p>
@@ -287,6 +283,7 @@ let wasm = new WebAssembly.Instance(module);
 <pre><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printNumber</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">echo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{ printNumber(n); }
 </code></pre>
+
 <p>The <em>echo</em> function just makes a call to the <em>printNumber</em> JavaScript function. When we instantiate the WebAssembly module, we must set the imported <em>printNumber</em> function, to enable a dynamic linking between the browser and the WebAssembly module:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -308,6 +305,7 @@ let wasm = new WebAssembly.Instance(module);
 &gt; run().then();
 <span class="hljs-number">2021</span>
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/echo">Source code</a></p>
 
 <h1 id="Auto-Description">Auto Description</h1>
@@ -335,6 +333,7 @@ let wasm = new WebAssembly.Instance(module);
 [ { <span class="hljs-attr">module</span>: <span class="hljs-string">&#x27;env&#x27;</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;printNumber&#x27;</span>, <span class="hljs-attr">kind</span>: <span class="hljs-string">&#x27;function&#x27;</span> } ]
 [ { <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;echo&#x27;</span>, <span class="hljs-attr">kind</span>: <span class="hljs-string">&#x27;function&#x27;</span> } ]
 </code></pre>
+
 <p>However these functions will give neither the signature of the functions nor the documentation of elements. </p>
 
 <h1 id="Dynamic-Linking">Dynamic Linking</h1>
@@ -345,6 +344,7 @@ let wasm = new WebAssembly.Instance(module);
 <li>a first WebAssembly module <em>math</em> exports a function <em>sum</em></li>
 <li>a second WebAssembly module <em>app</em> imports this function <em>sum</em>, and exports the function <em>run</em></li>
 </ul>
+
 <p>The JavaScript code must ensure that the WebAssembly module <em>math</em> is instantiated before the WebAssembly module <em>app</em> in order to import the required  function <em>sum</em>.</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> bytecodeLib = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">&quot;math.wasm&quot;</span>);
@@ -355,6 +355,7 @@ let wasm = new WebAssembly.Instance(module);
 <span class="hljs-comment">// app is ready.</span>
 wasmApp.instance.exports.run();
 </code></pre>
+
 <p>By convention, the key of the <em>imports</em> section is the module name: <em>math</em>.</p>
 
 <p>In our examples, when the imports come from the top level JavaScript module we are using the <em>env</em> key.</p>
@@ -371,6 +372,7 @@ wasmApp.instance.exports.run();
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> counter = <span class="hljs-keyword">new</span> WebAssembly.Global( { <span class="hljs-attr">value</span>:<span class="hljs-string">&#x27;i32&#x27;</span>, <span class="hljs-attr">mutable</span>:<span class="hljs-literal">true</span> }, <span class="hljs-number">0</span>);
 </code></pre>
+
 <p>Now we can set this global variable at instantiation time, so that the <em>inc</em> function will increment it:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -390,34 +392,39 @@ wasmApp.instance.exports.run();
 &gt; run().then();
 Counter value is <span class="hljs-number">2</span>
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/counter">Source code</a></p>
 
 <h1 id="Memory-Buffer">Memory Buffer</h1>
 
 <p>The memory buffer (or linear memory in WebAssembly terminology) is a buffer of bytes, typed as an <em>ArrayBuffer</em> for JavaScript. A single memory buffer is available to store all the data shared between the WebAssembly module and the JavaScript code. </p>
 
-<h2 id="Allocation-">Allocation </h2>
+<h2 id="Allocation">Allocation</h2>
 
 <p>A memory buffer can be allocated on JavaScript side, or the WebAssembly module side. On JavaScript side, the memory is allocated by specifying an initial size that is a number of pages, each page size is 64 kilo-bytes. A maximum size can be specified optionally as well:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> memory = <span class="hljs-keyword">new</span> WebAssembly.Memory( { <span class="hljs-attr">initial</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">maximum</span>: <span class="hljs-number">2</span> } );
 </code></pre>
+
 <p>Once the memory is allocated, we can initialize the content. We need to access the buffer property by creating an "array view". For example, to store integers encoded on 32 bits, we use the <em>Uint32Array</em> array view:</p>
 
 <pre><code class="hljs"><span class="hljs-comment">// Wrap the memory.buffer as an array of Unsigned Integers </span>
 <span class="hljs-keyword">let</span> numbers = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(memory.buffer);
 </code></pre>
+
 <p>Now we can set the numbers in the memory buffer:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
   numbers[i] = i;
 }
 </code></pre>
+
 <p>As a use case of the memory buffer we have just allocated, we call the <em>sum</em> WebAssembly module which interface is in C programming language:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> mem[]; <span class="hljs-comment">// imported memory buffer</span>
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sum</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> len)</span></span>; <span class="hljs-comment">// sum the &quot;len&quot; integers stored in mem and return the result</span>
 </code></pre>
+
 <p>We transmit this buffer to the WebAssembly Module at instantiation time.</p>
 
 <p>Here we suppose that the expected memory name is <em>mem</em> and is imported via the <em>env</em> key.</p>
@@ -439,6 +446,7 @@ Counter value is <span class="hljs-number">2</span>
 &gt; run().then();
 <span class="hljs-number">45</span>
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/sum">Source code</a></p>
 
 <h2 id="Strings">Strings</h2>
@@ -451,11 +459,13 @@ Counter value is <span class="hljs-number">2</span>
 <span class="hljs-keyword">let</span> encoder = <span class="hljs-keyword">new</span> TextEncoder();
 encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</span>
 </code></pre>
+
 <p>Now we can call a <em>reverse</em> function to reverse the bytes order. The WebAssembly module interface is in C programming language:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> mem[]; <span class="hljs-comment">// imported memory buffer</span>
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reverse</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> len)</span></span>; <span class="hljs-comment">// reverse the bytes order for len bytes</span>
 </code></pre>
+
 <p>Note that the <em>reverse</em> function needs a convention to locate the end of the string. It could be a length stored in the first bytes of the buffer, a zero byte at the end of the data. Here we specify the length of the input string as a parameter. At last we rebuild the string result from the memory buffer using the <em>TextDecoder</em> class, which will make another copy of the bytes:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -476,6 +486,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 &gt; run().then();   
 !dlrow olleh 
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/reverse">Source code</a></p>
 
 <h2 id="Shared-Memory-Buffer">Shared Memory Buffer</h2>
@@ -488,6 +499,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 <span class="hljs-keyword">let</span> wasm1 = <span class="hljs-keyword">await</span> WebAssembly.instantiateStreaming(bytecode, imports);
 <span class="hljs-keyword">let</span> wasm2Instance = <span class="hljs-keyword">new</span> WebAssembly.Instance(wasm1.module, imports);
 </code></pre>
+
 <p>Then let's do a reverse on the share memory buffer two times by the two distinct WebAssembly modules:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -514,6 +526,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 <span class="hljs-number">1</span> !dlrow olleh
 <span class="hljs-number">2</span> hello world!
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/reverse">Source code</a></p>
 
 <h2 id="Static-Memory-Buffer">Static Memory Buffer</h2>
@@ -524,10 +537,12 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 <span class="hljs-keyword">char</span> b[<span class="hljs-number">6</span>] = { <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>, <span class="hljs-string">&#x27;E&#x27;</span>, <span class="hljs-string">&#x27;F&#x27;</span> };
 <span class="hljs-keyword">int</span> c[<span class="hljs-number">2</span>] = { <span class="hljs-number">4</span>, <span class="hljs-number">5</span> };
 </code></pre>
+
 <p>In this case, the JavaScript code does not define the memory buffer but gets it as an exported property:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> memory = wasm.instance.exports.memory;
 </code></pre>
+
 <p>The memory buffer is organized as follow.</p>
 
 <ul>
@@ -535,6 +550,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 <li>At <strong>offset 12</strong>, we can find the beginning of the array <strong>b</strong>. The bytes are the character code of 'A', 'B', 'C', 'D', 'E', 'F'. The two following bytes are set with 0x00, in order to align the next integer on an offset that is a multiple of 4. This is a CPU constraint to ensure a fast memory access.</li>
 <li>At <strong>offset 20</strong>, we can find the beginning of the array <strong>c</strong>.</li>
 </ul>
+
 <pre><code class="hljs">   Offsets|       Bytes       | Array Entries
 ----------+-------------------+----------------------
         0 |0x01 0x00 0x00 0x00| a[0]
@@ -545,6 +561,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
        20 |0x04 0x00 0x00 0x00| c[0]
        24 |0x05 0x00 0x00 0x00| c[1]
 </code></pre>
+
 <p>From JavaScript we must take into account these offsets to map these arrays on the correct bytes. The <em>Uint32Array</em> constructor allows to access these data without making a copy from an array to another:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -570,6 +587,7 @@ encoder.encodeInto(hello, buffer); <span class="hljs-comment">// Make a copy</sp
 ABCDEF
 <span class="hljs-built_in">Uint32Array</span>(<span class="hljs-number">2</span>) [ <span class="hljs-number">4</span>, <span class="hljs-number">5</span> ]
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/offset">Source code</a></p>
 
 <p>This mapping code may come from a JavaScript wrapper distributed with the WebAssembly module. </p>
@@ -606,6 +624,7 @@ ABCDEF
     }
 }
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/memory-allocator">Source code</a></p>
 
 <p>Now we can allocate each array upon the heap:</p>
@@ -636,11 +655,13 @@ ABCDEF
 <span class="hljs-built_in">Uint8Array</span>(<span class="hljs-number">6</span>) [ <span class="hljs-number">65</span>, <span class="hljs-number">66</span>, <span class="hljs-number">67</span>, <span class="hljs-number">68</span>, <span class="hljs-number">69</span>, <span class="hljs-number">70</span> ] ABCDEF
 <span class="hljs-built_in">Uint32Array</span>(<span class="hljs-number">2</span>) [ <span class="hljs-number">4</span>, <span class="hljs-number">5</span> ]
 </code></pre>
+
 <p>When we need to call a WebAssembly function, we set as parameters the offset and the length of the array:</p>
 
 <pre><code class="hljs"><span class="hljs-comment">// Example of a call to a WebAssembly module</span>
 wasm.instance.exports.sum(c.byteOffset, c.length);
 </code></pre>
+
 <p>If more memory is required, then we can grow up the memory buffer with the <em>grow</em> method. You can decide to increase the memory buffer size by comparing the current size with a target size, and set a new number of pages:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">const</span> PAGE_SIZE = <span class="hljs-number">64</span> * <span class="hljs-number">1024</span>;
@@ -651,6 +672,7 @@ wasm.instance.exports.sum(c.byteOffset, c.length);
     memory.grow(nbPages);
 }
 </code></pre>
+
 <h2 id="Out-of-Bounds-Exception">Out of Bounds Exception</h2>
 
 <p>From <strong>JavaScript</strong>, if we attempt to <strong>set</strong> a data beyond the end of an array we will get an exception</p>
@@ -658,6 +680,7 @@ wasm.instance.exports.sum(c.byteOffset, c.length);
 <pre><code class="hljs">&gt; run().then();
 <span class="hljs-built_in">RangeError</span>: offset is out <span class="hljs-keyword">of</span> bounds
 </code></pre>
+
 <p>From <strong>JavaScript</strong>, if we attempt to <strong>get</strong> a data beyond the end of the array we will get an <em>undefined</em> value.</p>
 
 <p>From the <strong>WebAssembly module</strong>, if we attempt to <strong>get</strong> or <strong>set</strong> some data beyond the memory buffer, then we will get an exception:</p>
@@ -665,6 +688,7 @@ wasm.instance.exports.sum(c.byteOffset, c.length);
 <pre><code class="hljs">&gt; run().then();
 RuntimeError: memory access out <span class="hljs-keyword">of</span> bounds
 </code></pre>
+
 <h1 id="Table">Table</h1>
 
 <p>A table is an array of function references. A single table can be defined by a WebAssembly module. A table allows to make an <strong>indirect</strong> call of a function implemented by the WebAssembly module using an index, and not <strong>directly</strong> with the function name.</p>
@@ -675,6 +699,7 @@ RuntimeError: memory access out <span class="hljs-keyword">of</span> bounds
 <span class="hljs-comment">// indirect call of function at index 0, with the parameters [1, 2, 3]</span>
 table.get(<span class="hljs-number">0</span>)(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>); 
 </code></pre>
+
 <p>The WebAssembly module can also use the table on its own side to make indirect calls.</p>
 
 <p>The main purpose of indirect calls is to replace the following switch statement:</p>
@@ -691,12 +716,14 @@ table.get(<span class="hljs-number">0</span>)(<span class="hljs-number">1</span>
         ...
   }    
 </code></pre>
+
 <p>with a simple indirect call statement:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> table = wasm.instance.exports.table;
 <span class="hljs-keyword">let</span> choice = ...
 table.get(choice)(p1, p2);
 </code></pre>
+
 <p>This replacement improves performances when there is a lot of test cases, but also becomes mandatory if the mapping of the <em>choice</em> value on the function may change from time to time.</p>
 
 <p>The index of a table may represent a state, or an identifier of an "object" of the WebAssembly module. For example, for our WebAssembly <em>game</em>, we have created four ships that can move in four directions: <strong>east, west, north, south</strong>. This module exposes the following interface in C programming language:</p>
@@ -709,6 +736,7 @@ table.get(choice)(p1, p2);
 <span class="hljs-keyword">void</span> (*table[<span class="hljs-number">4</span>])(<span class="hljs-keyword">int</span> id); <span class="hljs-comment">// example of content: { moveToNorth, moveToNorth, moveToNorth, moveToNorth }</span>
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gameLoop</span><span class="hljs-params">()</span></span>;
 </code></pre>
+
 <p>The members of the interface are:</p>
 
 <ul>
@@ -717,6 +745,7 @@ table.get(choice)(p1, p2);
 <li><em>table</em>: the indirect calls table, each index of the table is a ship ID, each entry is a function to move the ship; the default value is <em>moveToNorth</em></li>
 <li><em>gameLoop</em>: the main function that will update the positions of the ships; it makes the indirect calls to the functions, in order to move each ship, on each game cycle. In a C progamming language the implementation would be:</li>
 </ul>
+
 <pre><code class="hljs"><span class="hljs-keyword">void</span> gameLoop()
 {
     <span class="hljs-keyword">for</span> (int id = <span class="hljs-number">0</span>; id &lt; <span class="hljs-number">4</span>; id++) 
@@ -725,6 +754,7 @@ table.get(choice)(p1, p2);
     }
 }
 </code></pre>
+
 <p>The JavaScript call consists of initializing the <strong>table</strong> with functions to move a ship toward a direction, and then calling the <em>gameLoop</em> two times, each call will set a new position for all ships:</p>
 
 <pre><code class="hljs"><span class="hljs-keyword">let</span> run = <span class="hljs-keyword">async</span> () =&gt; {
@@ -763,6 +793,7 @@ Ship #1 locate at (-2, 0)
 Ship #2 locate at (0, 2)
 Ship #3 locate at (0, -2)
 </code></pre>
+
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/PascalPares/webassembly/tree/master/game">Source code</a></p>
 
 <h1 id="To-Go-Further">To Go Further</h1>
@@ -770,18 +801,23 @@ Ship #3 locate at (0, -2)
 <ul>
 <li>The JavaScript WebAssembly reference documentation by the Mozilla Developer Network:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly">https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly</a></li>
 </ul>
+
 <ul>
 <li>Utility to compile a WebAssembly module from WAT format to binary format:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wat2wasm/">https://webassembly.github.io/wabt/demo/wat2wasm/</a></li>
 </ul>
+
 <ul>
 <li>Utility to decode a WebAssembly module from binary format to WAT format:<br> <a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/wabt/demo/wasm2wat/">https://webassembly.github.io/wabt/demo/wasm2wat/</a></li>
 </ul>
+
 <ul>
 <li>Forhcoming WebAssembly specification:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/core/">https://webassembly.github.io/spec/core/</a></li>
 </ul>
+
 <ul>
 <li>Forhcoming WebAssembly JavaScript interface specification:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://webassembly.github.io/spec/js-api/">https://webassembly.github.io/spec/js-api/</a></li>
 </ul>
+
 <ul>
 <li>The empscripten project:<br><a style="word-break:break-all;" target="_blank" rel="noopener noreferrer" href="https://emscripten.org/">https://emscripten.org/</a></li>
 </ul>
