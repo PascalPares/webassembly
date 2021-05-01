@@ -454,7 +454,7 @@ If more memory is required, then we can grow up the memory buffer with the *grow
 const PAGE_SIZE = 64 * 1024;
 let currentSize = memory.buffer.byteLength;
 if (currentSize < newSize) {
-    let nbPages = Math.ceil(newSize / PAGE_SIZE);
+    let nbPages = Math.ceil((newSize - currentSize) / PAGE_SIZE);
     console.log("grow memory up to ", nbPages, " * ", PAGE_SIZE);
     memory.grow(nbPages);
 }

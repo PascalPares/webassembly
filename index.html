@@ -687,7 +687,7 @@ wasm.instance.exports.sum(c.byteOffset, c.length);
 <pre><code class="hljs"><span class="hljs-keyword">const</span> PAGE_SIZE = <span class="hljs-number">64</span> * <span class="hljs-number">1024</span>;
 <span class="hljs-keyword">let</span> currentSize = memory.buffer.byteLength;
 <span class="hljs-keyword">if</span> (currentSize &lt; newSize) {
-    <span class="hljs-keyword">let</span> nbPages = <span class="hljs-built_in">Math</span>.ceil(newSize / PAGE_SIZE);
+    <span class="hljs-keyword">let</span> nbPages = <span class="hljs-built_in">Math</span>.ceil((newSize - currentSize) / PAGE_SIZE);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;grow memory up to &quot;</span>, nbPages, <span class="hljs-string">&quot; * &quot;</span>, PAGE_SIZE);
     memory.grow(nbPages);
 }
